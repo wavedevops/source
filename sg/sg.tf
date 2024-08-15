@@ -21,6 +21,6 @@ resource "aws_security_group" "allow_all" {
   }
 
   tags = {
-    Name = "allow_all_tcp_sg"
+    Name = "allow_all"
   }
 }
