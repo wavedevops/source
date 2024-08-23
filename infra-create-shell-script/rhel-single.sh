@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##### Change these values ###
-ZONE_ID="Z02090163Q152ZKQQQT6A"
+ZONE_ID="Z03344643L75U1XM2JHL7"
 SG_NAME="allow_all"
 REGION="us-east-1"  # Specify your desired AWS region here (e.g., us-east-1, us-west-2)
 #ENV="dev"
