@@ -3,7 +3,7 @@
 ##### Change these values ###
 ZONE_ID="Z02090163Q152ZKQQQT6A"
 SG_NAME="allow_all"
-REGION="us-east-1"  # Specify your desired AWS region here
+REGION="us-east-1d"  # Specify your desired AWS region here
 #ENV="dev"
 #############################
 
