@@ -1,67 +1,41 @@
 #!/bin/bash
 
-# Define variables
-INSTANCE_TYPE="t3.micro"  # Change to your desired instance type
-AMI_NAME="RHEL-9-DevOps-Practice"  # Replace with your desired AMI name
-KEY_NAME="rhel"  # Pass your key pair name as the first argument
-SECURITY_GROUP_NAME="allow_all"  # Replace with your security group name
-REGION="us-east-1"  # Change to your desired region
-AVAILABILITY_ZONE="us-east-1a"  # Specify the single Availability Zone
+##### Change these values ###
+SG_NAME="allow_all"
+REGION="us-east-1"  # Specify your desired AWS region here (e.g., us-east-1, us-west-2)
+#############################
 
-# Get the latest AMI ID based on the AMI name
-AMI_ID=$(aws ec2 describe-images \
-    --filters "Name=name,Values=$AMI_NAME" \
-    --query 'Images[0].ImageId' \
-    --output text \
-    --region $REGION)
+create_ec2() {
+  PRIVATE_IP=$(aws ec2 run-instances \
+      --region ${REGION} \
+      --image-id ${AMI_ID} \
+      --instance-type t3.micro \
+      --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${COMPONENT}}]"  \
+      --instance-market-options "MarketType=spot,SpotOptions={SpotInstanceType=persistent,InstanceInterruptionBehavior=stop}"\
+      --security-group-ids ${SGID} \
+      | jq '.Instances[].PrivateIpAddress' | sed -e 's/"//g')
 
-if [ -z "$AMI_ID" ]; then
-    echo "Error: AMI with name '$AMI_NAME' not found."
-    exit 1
+  sed -e "s/IPADDRESS/${PRIVATE_IP}/" -e "s/COMPONENT/${COMPONENT}/" route53.json >/tmp/record.json
+  aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --region ${REGION} --change-batch file:///tmp/record.json | jq
+}
+
+## Main Program
+AMI_ID=$(aws ec2 describe-images --region ${REGION} --filters "Name=name,Values=RHEL-9-DevOps-Practice" | jq '.Images[].ImageId' | sed -e 's/"//g')
+if [ -z "${AMI_ID}" ]; then
+  echo "AMI_ID not found"
+  exit 1
 fi
 
-# Get the security group ID based on the security group name
-SECURITY_GROUP_ID=$(aws ec2 describe-security-groups \
-    --filters "Name=group-name,Values=$SECURITY_GROUP_NAME" \
-    --query 'SecurityGroups[0].GroupId' \
-    --output text \
-    --region $REGION)
-
-if [ -z "$SECURITY_GROUP_ID" ]; then
-    echo "Error: Security group with name '$SECURITY_GROUP_NAME' not found."
-    exit 1
+SGID=$(aws ec2 describe-security-groups --region ${REGION} --filters Name=group-name,Values=${SG_NAME} | jq  '.SecurityGroups[].GroupId' | sed -e 's/"//g')
+if [ -z "${SGID}" ]; then
+  echo "Given Security Group does not exist"
+  exit 1
 fi
 
-# Create the Spot Instance Request
-SPOT_REQUEST_ID=$(aws ec2 request-spot-instances \
-    --instance-count 1 \
-    --type "persistent" \
-    --launch-specification "{
-        \"ImageId\": \"$AMI_ID\",
-        \"InstanceType\": \"$INSTANCE_TYPE\",
-        \"KeyName\": \"$KEY_NAME\",
-        \"SecurityGroupIds\": [\"$SECURITY_GROUP_ID\"],
-        \"Placement\": { \"AvailabilityZone\": \"$AVAILABILITY_ZONE\" }
-    }" \
-    --region $REGION \
-    --query 'SpotInstanceRequests[0].SpotInstanceRequestId' \
-    --output text)
-
-if [ $? -ne 0 ]; then
-    echo "Error creating Spot Instance Request in $AVAILABILITY_ZONE"
-    exit 1
+COMPONENT="${1}"
+if [ -z "${COMPONENT}" ]; then
+  echo "Input component name is needed"
+  exit 1
 fi
 
-echo "Spot Instance Request ID: $SPOT_REQUEST_ID in $AVAILABILITY_ZONE"
-
-# Set the instance interruption behavior to 'stop'
-aws ec2 modify-spot-instance-request \
-    --spot-instance-request-id "$SPOT_REQUEST_ID" \
-    --instance-interruption-behavior "stop" \
-    --region $REGION
-
-if [ $? -eq 0 ]; then
-    echo "Set interruption behavior to 'stop' in $AVAILABILITY_ZONE."
-else
-    echo "Failed to set interruption behavior in $AVAILABILITY_ZONE."
-fi
+create_ec2
