@@ -3,7 +3,7 @@
 # Define variables
 INSTANCE_TYPE="t3.micro"  # Change to your desired instance type
 AMI_NAME="RHEL-9-DevOps-Practice"  # Replace with your desired AMI name
-KEY_NAME="$1"  # Pass your key pair name as the first argument
+KEY_NAME="rhel"  # Pass your key pair name as the first argument
 SECURITY_GROUP_NAME="allow_all"  # Replace with your security group name
 REGION="us-east-1"  # Change to your desired region
 AVAILABILITY_ZONE="us-east-1a"  # Specify the single Availability Zone
