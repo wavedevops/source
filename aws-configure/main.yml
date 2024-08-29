@@ -33,6 +33,6 @@
       mode: '0600'
   
   vars:
-   aws_access_key_id: {{ lookup('aws_ssm', 'access_key_id', region='us-east-1' ) }}  # Replace with your actual AWS Access Key ID
-   aws_secret_access_key: {{ lookup('aws_ssm', 'secret_access_key', region='us-east-1' ) }}  # Replace with your actual AWS Secret Access Key
+   aws_access_key_id: "{{ lookup('aws_ssm', 'access_key_id', region='us-east-1' ) }}"  # Replace with your actual AWS Access Key ID
+   aws_secret_access_key: "{{ lookup('aws_ssm', 'secret_access_key', region='us-east-1' ) }}"  # Replace with your actual AWS Secret Access Key
    aws_region: "us-east-1"  # Replace with your desired AWS region (e.g., us-east-1)
