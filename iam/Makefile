@@ -1,12 +1,12 @@
 apply:
-	terraform init -backend-config=state.tfvars
+	terraform init -backend-config=provider.tf
 	terraform apply -auto-approve
 	rm -rf .terraform
 	rm -rf .terraform.lock.hcl
 
 
 destroy:
-	terraform init -backend-config=env-dev/state.tfvars
-	terraform destroy -auto-approve -var-file=env-dev/inputs.tfvars
+	terraform init -backend-config=provider.tf
+	terraform destroy -auto-approve
 	rm -rf .terraform
 	rm -rf .terraform.lock.hcl
