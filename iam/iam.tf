@@ -4,11 +4,11 @@ resource "aws_iam_user" "user_hari" {
 }
 
 # Create login profile (set the password)
-resource "aws_iam_user_login_profile" "user_hari_profile" {
-  user                = aws_iam_user.user_hari.name
-  password            = "@123Admin"
-  password_reset_required = false
-}
+# resource "aws_iam_user_login_profile" "user_hari_profile" {
+#   user                = aws_iam_user.user_hari.name
+#   password            = "@123Admin"
+#   password_reset_required = false
+# }
 
 # Attach the AdministratorAccess policy (full access to all AWS services)
 resource "aws_iam_user_policy_attachment" "user_hari_admin_policy" {
