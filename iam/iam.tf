@@ -1,13 +1,3 @@
-provider "aws" {
-  region = "us-east-1"  # Set your desired AWS region
-}
-
-# Retrieve the password from AWS Systems Manager Parameter Store
-data "aws_ssm_parameter" "hari_password" {
-  name            = "/myapp/hari/password"  # Replace with your actual parameter name
-  with_decryption = true                    # Decrypts the SecureString value
-}
-
 # Create IAM user
 resource "aws_iam_user" "user_hari" {
   name = "hari"
