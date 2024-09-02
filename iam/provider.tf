@@ -1,12 +1,3 @@
-terraform {
-  backend "s3" {
-    bucket = "chowdary-hari"
-    key    = "iam/iam/terraform.tfstate"
-    region = "us-east-1"
-  }
-}
-
-#provide authentication here
 provider "aws" {
   region = "us-east-1"
 }
