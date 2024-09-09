@@ -16,7 +16,7 @@ Here's the updated step-by-step guide that includes both `.bashrc` and `.zshrc` 
    vim ~/.customCommands/gitp.sh
    ```
 
-3. **In Vim, add the following script:**
+3. **In Vim, add the following script:***
 
    ```bash
    #!/bin/bash
