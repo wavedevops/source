@@ -1,20 +1,26 @@
-Here’s how you can adjust the script for your macOS environment:
+Now, you can use the `gitp` command to automatically add, commit, and push changes to your repository with an incremented commit message on macOS.
 
-1. Create the directory for your custom commands:
+Here's the updated step-by-step guide that includes both `.bashrc` and `.zshrc` instructions for setting up the `gitp` command:
+
+---
+
+### Setting Up the `gitp` Command
+
+1. **Create the directory for your custom commands:**
    ```bash
    mkdir -p ~/.customCommands
    ```
 
-2. Create the `gitp.sh` script using Vim:
+2. **Create the `gitp.sh` script using Vim:**
    ```bash
    vim ~/.customCommands/gitp.sh
    ```
 
-3. In Vim, add the following script:
+3. **In Vim, add the following script:**
 
    ```bash
    #!/bin/bash
-   
+
    FILE=~/.count
 
    git_push () {
@@ -33,39 +39,60 @@ Here’s how you can adjust the script for your macOS environment:
    fi
    ```
 
-4. Save and exit Vim by typing `:wq`.
+4. **Save and exit Vim by typing `:wq`.**
 
-5. Make the script executable:
+5. **Make the script executable:**
    ```bash
    chmod +x ~/.customCommands/gitp.sh
    ```
 
-6. Open your `.bashrc` file in Vim:
+6. **Add the alias to your `.bashrc` file:**
    ```bash
    vim ~/.bashrc
    ```
 
-7. Add the following alias to the end of the file:
-   ```bash
-   alias gitp='source ~/.customCommands/gitp.sh'
-   ```
+   - Scroll to the end of the file and add:
+     ```bash
+     alias gitp='source ~/.customCommands/gitp.sh'
+     ```
 
-8. Save and exit Vim by typing `:wq`.
+7. **Save and exit Vim by typing `:wq`.**
 
-9. Finally, reload your `.bashrc` to apply the changes:
+8. **Reload your `.bashrc` to apply the changes:**
    ```bash
    source ~/.bashrc
    ```
 
-Now, you can use the `gitp` command to automatically add, commit, and push changes to your repository with an incremented commit message on macOS.
+### Additional Steps for Zsh Users
 
+If you're using Zsh instead of Bash, you'll need to add the alias to your `.zshrc` file as well:
 
+1. **Open your `.zshrc` file in Vim:**
+   ```bash
+   vim ~/.zshrc
+   ```
+
+2. **Add the alias to the end of the file:**
+   ```bash
+   alias gitp='source ~/.customCommands/gitp.sh'
+   ```
+
+3. **Save and exit Vim by typing `:wq`.**
+
+4. **Reload your `.zshrc` to apply the changes:**
+   ```bash
+   source ~/.zshrc
+   ```
+
+---
+
+After completing these steps, the `gitp` command should work in both Bash and Zsh. If you're using Zsh, make sure to perform the additional steps for the `.zshrc` file.
 
 #########################################
 
 shell script for mac os 
 
-Here’s a shell script that checks if each file or directory exists before creating or modifying it. If it exists, the script will skip the creation or modification step.
+Hereï¿½s a shell script that checks if each file or directory exists before creating or modifying it. If it exists, the script will skip the creation or modification step.
 
 ```bash
 #!/bin/bash
@@ -120,8 +147,8 @@ echo "Reloaded ~/.bashrc."
 ```
 
 ### Explanation:
-- **Directory Creation:** The script checks if the `~/.customCommands` directory exists. If it doesn’t, the directory is created.
-- **Script Creation:** It checks if the `gitp.sh` script exists in `~/.customCommands`. If it doesn’t, the script is created and made executable.
+- **Directory Creation:** The script checks if the `~/.customCommands` directory exists. If it doesnï¿½t, the directory is created.
+- **Script Creation:** It checks if the `gitp.sh` script exists in `~/.customCommands`. If it doesnï¿½t, the script is created and made executable.
 - **Alias Addition:** The script checks if the alias for `gitp` exists in the `~/.bashrc` file. If not, the alias is added.
 - **Reloading `.bashrc`:** Finally, the script reloads the `~/.bashrc` file to apply the alias.
 
@@ -200,4 +227,4 @@ echo -e "${GREEN}Reloaded ~/.bashrc.${NC}"
 - **`YELLOW`**: Used for warnings or information about existing conditions.
 - **`NC`**: Resets the color back to the terminal's default.
 
-The `-e` flag in the `echo` command enables interpretation of backslash escapes, allowing the use of color codes. This script will now provide color-coded feedback as it runs, making it easier to see what’s happening.
+The `-e` flag in the `echo` command enables interpretation of backslash escapes, allowing the use of color codes. This script will now provide color-coded feedback as it runs, making it easier to see whatï¿½s happening.
