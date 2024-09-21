@@ -10,7 +10,7 @@ create_ec2() {
   PRIVATE_IP=$(aws ec2 run-instances \
       --region ${REGION} \
       --image-id ${AMI_ID} \
-      --instance-type t2.micro \
+      --instance-type t3.micro \
       --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${COMPONENT}}]" \
       --instance-market-options "MarketType=spot,SpotOptions={SpotInstanceType=persistent,InstanceInterruptionBehavior=stop}" \
       --security-group-ids ${SGID} \
@@ -44,3 +44,4 @@ fi
 
 # Call the create_ec2 function to create the EC2 instance
 create_ec2
+
