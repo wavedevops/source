@@ -3,7 +3,7 @@ resource "aws_instance" "app" {
   ami                    = var.ami
   instance_type          = var.instance_type
   vpc_security_group_ids = var.security_groups
-  subnet_id              = var.subnet_id
+  subnet_id              = ""
 
   instance_market_options {
     market_type = "spot"

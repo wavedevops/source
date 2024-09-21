@@ -5,6 +5,3 @@ data "aws_ssm_parameter" "token" {
 data "cloudflare_zone" "zone" {
   name = "chowdary.cloud"
 }
-data "aws_vpc" "default" {
-  default = true
-}

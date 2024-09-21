@@ -8,9 +8,26 @@ data "aws_ssm_parameter" "token" {
   name = "api_token"
 }
 
+# Get the default VPC
 data "aws_vpc" "default" {
   default = true
 }
+
+
+# data "aws_subnet" "default_subnet" {
+#   vpc_id = data.aws_vpc.default.id
+#
+#   filter {
+#     name   = "default-for-az"
+#     values = ["true"]
+#   }
+#
+#   filter {
+#     name   = "availability-zone"
+#     values = ["us-east-1a"]  # Specify your AZ
+#   }
+# }
+
 
 data "aws_security_group" "allow_all" {
   filter {
@@ -20,10 +37,3 @@ data "aws_security_group" "allow_all" {
   vpc_id = data.aws_vpc.default.id
 }
 
-data "aws_subnet" "default_subnet" {
-  vpc_id = data.aws_vpc.default.id
-  filter {
-    name   = "default-for-az"
-    values = ["true"]
-  }
-}
