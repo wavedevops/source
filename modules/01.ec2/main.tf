@@ -3,7 +3,7 @@ resource "aws_instance" "app" {
   ami                    = var.ami
   instance_type          = var.instance_type
   vpc_security_group_ids = var.security_groups
-  subnet_id              = ""
+  subnet_id              = var.subnet_id
 
   instance_market_options {
     market_type = "spot"
@@ -15,19 +15,8 @@ resource "aws_instance" "app" {
   }
 
   tags = {
-    Name = "${var.component}-${var.env}"
+    Name = var.component
   }
-}
-
-resource "cloudflare_record" "app" {
-  zone_id = data.cloudflare_zone.zone.id
-  name    = var.component
-  content = var.dns_record
-  type    = "A"
-  ttl     = 60
-  proxied = false
-  depends_on = [aws_instance.app]        # Ensure the DNS record waits for the instance to be created
-
 }
 
 
