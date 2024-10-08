@@ -1,10 +1,6 @@
 resource "aws_key_pair" "vpn" {
   key_name   = "openvpn"
   public_key = file("~/.ssh/openvpn.pub")
-
-  lifecycle {
-    ignore_changes = [key_name]
-  }
 }
 
 
@@ -37,12 +33,3 @@ resource "aws_route53_record" "record" {
   ttl     = "5"
   records = [aws_instance.vpn.public_ip]  # Use public_ip instead of id
 }
-
-│ Error: importing EC2 Key Pair (openvpn): operation error EC2: ImportKeyPair, https response error StatusCode: 400, RequestID: f945fed9-3b21-4eab-9129-8ca77815e142, api error InvalidKeyPair.Duplicate: The keypair already exists
-│
-│   with aws_key_pair.vpn,
-│   on vpn.tf line 1, in resource "aws_key_pair" "vpn":
-│    1: resource "aws_key_pair" "vpn" {
-}
-
-add over ride
