@@ -1,0 +1,18 @@
+{
+  "Comment": "Delete A record for jenkins.chowdary.cloud",
+  "Changes": [
+    {
+      "Action": "DELETE",
+      "ResourceRecordSet": {
+        "Name": "jenkins.chowdary.cloud",
+        "Type": "A",
+        "TTL": 10,
+        "ResourceRecords": [
+          {
+            "Value": "34.224.57.16"
+          }
+        ]
+      }
+    }
+  ]
+}
