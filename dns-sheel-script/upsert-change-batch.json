@@ -1,10 +1,10 @@
 {
-  "Comment": "Create A record for workstation.chowdary.cloud",
+  "Comment": "Upsert A record for workstation.chowdary.cloud.",
   "Changes": [
     {
-      "Action": "CREATE",
+      "Action": "UPSERT",
       "ResourceRecordSet": {
-        "Name": "workstation.chowdary.cloud",
+        "Name": "workstation.chowdary.cloud.",
         "Type": "A",
         "TTL": 10,
         "ResourceRecords": [

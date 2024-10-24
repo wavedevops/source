@@ -1,15 +1,15 @@
 {
-  "Comment": "Delete A record for jenkins.chowdary.cloud",
+  "Comment": "Delete A record for workstation.chowdary.cloud",
   "Changes": [
     {
       "Action": "DELETE",
       "ResourceRecordSet": {
-        "Name": "jenkins.chowdary.cloud",
+        "Name": "workstation.chowdary.cloud",
         "Type": "A",
         "TTL": 10,
         "ResourceRecords": [
           {
-            "Value": "34.224.57.16"
+            "Value": "50.19.36.208"
           }
         ]
       }
