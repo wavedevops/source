@@ -28,34 +28,31 @@ data "aws_security_group" "allow_all" {
   vpc_id = data.aws_vpc.default.id
 }
 
-
-
-
-
 resource "aws_key_pair" "allow_all" {
   key_name   = "vpn"
   public_key = file("~/.ssh/allow_all.pub")
 }
 
-module "vpn" {
-  source  = "terraform-aws-modules/ec2-instance/aws"
-  key_name = aws_key_pair.allow_all.key_name
-  name     = "minicube"
 
-  instance_type          = "t3.micro"
+# Minicube instance using spot pricing
+resource "aws_instance" "minicube" {
+  key_name = aws_key_pair.allow_all.key_name
+  ami = data.aws_ami.ami.id
+  instance_type = "t3.micro"
+  subnet_id = var.subnets["us-east-1c"]
   vpc_security_group_ids = [data.aws_security_group.allow_all.id]
-  subnet_id              = var.subnets["us-east-1c"]
-  ami                    = data.aws_ami.ami.id
-  
-  tags = {
-    Name = "minicube"
+
+  instance_market_options {
+    market_type = "spot"
+
+    spot_options {
+      max_price                      = "0"  # Set to the lowest price or remove it for auto selection
+      instance_interruption_behavior = "stop"  # Stop instead of terminate on interruption
+      spot_instance_type             = "persistent"  # Keep instance running even after interruption
+    }
   }
 
-  # Spot Instance Configuration
-  spot_price = "0"  # Automatically use the lowest price
-  spot_options {
-    max_price                      = "0"  # Automatically use the lowest price
-    instance_interruption_behavior = "stop"  # Stop instead of terminate on interruption
-    spot_instance_type             = "persistent"  # Keep instance running even after interruption
+  tags = {
+    Name = "minicube"
   }
 }
