@@ -12,7 +12,8 @@ SUBNET_US_EAST_1F="subnet-05821032acb47d88c"
 SG_NAME="allow_all"
 REGION="us-east-1"  # Specify your desired AWS region here (e.g., us-east-1, us-west-2)
 SUBNET_ID="$SUBNET_US_EAST_1C"  # Specify your subnet ID here
-INSTANCE_TYPE="t3.micro"  # Specify your desired instance type here
+INSTANCE_TYPE="t2.micro"  # Specify your desired instance type here
+KEY_NAME="allow_all"  # Specify your key pair name here
 #############################
 
 create_ec2() {
@@ -22,10 +23,11 @@ create_ec2() {
       --image-id ${AMI_ID} \
       --instance-type ${INSTANCE_TYPE} \
       --subnet-id ${SUBNET_ID} \
+      --key-name ${KEY_NAME} \
       --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${COMPONENT}}]" \
       --instance-market-options "MarketType=spot,SpotOptions={SpotInstanceType=persistent,InstanceInterruptionBehavior=stop}" \
       --security-group-ids ${SGID})
-  
+
   INSTANCE_ID=$(echo ${INSTANCE_DATA} | jq -r '.Instances[].InstanceId')
   PRIVATE_IP=$(echo ${INSTANCE_DATA} | jq -r '.Instances[].PrivateIpAddress')
 
