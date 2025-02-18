@@ -1,5 +1,5 @@
-resource "aws_security_group" "allow_all" {
-  name        = "allow_all"
+resource "aws_security_group" "allow-all" {
+  name        = "allow-all"
   description = "Security Group allowing all inbound TCP traffic"
 
   // Ingress rule allowing all inbound TCP traffic
@@ -21,6 +21,6 @@ resource "aws_security_group" "allow_all" {
   }
 
   tags = {
-    Name = "allow_all"
+    Name = "allow-all"
   }
 }
