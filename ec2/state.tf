@@ -11,3 +11,6 @@ terraform {
     region = "us-east-1"                     # AWS region where the S3 bucket is located
   }
 }
+
+
+
