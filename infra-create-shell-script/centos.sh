@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##### Change these values ###
-SG_NAME="allow_all"
+SG_NAME="allow-all"
 REGION="us-east-1"  # Specify your desired AWS region here (e.g., us-east-1, us-west-2)
 #############################
 

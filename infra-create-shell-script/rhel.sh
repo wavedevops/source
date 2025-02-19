@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # Store each subnet in a separate variable
+# Store each subnet in a separate variable
+# shellcheck disable=SC2034
 SUBNET_US_EAST_1A="subnet-0d6f188df6ab4cfee"
 SUBNET_US_EAST_1B="subnet-084d096cd8e354551"
 SUBNET_US_EAST_1C="subnet-0969c012e3344c524"
@@ -9,10 +11,10 @@ SUBNET_US_EAST_1E="subnet-020eec5c0a3cff8ca"
 SUBNET_US_EAST_1F="subnet-05821032acb47d88c"
 
 ##### Change these values ###
-SG_NAME="allow_all"
+SG_NAME="allow-all"
 REGION="us-east-1"  # Specify your desired AWS region here (e.g., us-east-1, us-west-2)
 SUBNET_ID="$SUBNET_US_EAST_1C"  # Specify your subnet ID here
-INSTANCE_TYPE="t3.micro"  # Specify your desired instance type here
+INSTANCE_TYPE="t2.micro"  # Specify your desired instance type here
 #############################
 
 create_ec2() {
